@@ -5,16 +5,20 @@ import BlurAsset2 from "../../assets/images/blur-asset-2.png";
 import BlurAsset1Mobile from "../../assets/images/blur-asset-1-mobile.png";
 import BlurAsset2Mobile from "../../assets/images/blur-asset-2-mobile.png";
 import { Select, MenuItem, InputBase, Divider, Checkbox } from "@mui/material";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./validations";
+import { AppContext } from "../../context/AppContext";
+import { getUserData } from "../../services/getUserService";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { setUser } = useContext(AppContext)!;
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     documentType: "DNI",
@@ -24,9 +28,25 @@ const Login: React.FC = () => {
     acceptCommercialPolicy: false
   };
 
-  const handleSubmit = (values: typeof initialValues) => {
-    console.log(values);
-    navigate("/home");
+  const handleUserLogin = async (values: typeof initialValues) => {
+    setIsLoading(true);
+    try {
+      const userData = await getUserData();
+      const enrichedUserData = {
+        name: userData.name,
+        lastName: userData.lastName,
+        birthDay: userData.birthDay,
+        documentType: values.documentType,
+        documentNumber: values.documentNumber,
+        phone: values.phone
+      };
+      setUser(enrichedUserData);
+      navigate("/home");
+    } catch (error) {
+      console.error("Failed to fetch user data", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,7 +100,7 @@ const Login: React.FC = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleSubmit}
+              onSubmit={handleUserLogin}
             >
               {({ values, handleChange }) => (
                 <Form className="login-page__form-content">
@@ -138,6 +158,11 @@ const Login: React.FC = () => {
                       as={Checkbox}
                       name="acceptPrivacyPolicy"
                       type="checkbox"
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "black"
+                        }
+                      }}
                     />
                     <label
                       className="login-page__checkbox-label"
@@ -156,6 +181,11 @@ const Login: React.FC = () => {
                       as={Checkbox}
                       name="acceptCommercialPolicy"
                       type="checkbox"
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "black"
+                        }
+                      }}
                     />
                     <label
                       className="login-page__checkbox-label"
@@ -177,6 +207,7 @@ const Login: React.FC = () => {
                       type="submit"
                       label="Cotiza aquí"
                       backgroundColor={"#03050f"}
+                      isLoading={isLoading}
                     />
                   </div>
                 </Form>

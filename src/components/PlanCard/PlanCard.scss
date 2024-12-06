@@ -15,6 +15,24 @@
     align-items: center;
   }
 
+  &__tag {
+    background-color: #7df0ba;
+    color: vars.$primary-color;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  &__empty {
+    height: 18px;
+  }
+
+  &__button-container {
+    margin-top: auto;
+  }
+
   &__title {
     font-family: "Lato";
     font-size: 20px;

@@ -1,6 +1,6 @@
 .button {
   display: inline-block;
-  width: auto; /* Por defecto */
+  width: auto;
   padding: 15px 25px;
   color: white;
   border: none;
@@ -15,6 +15,12 @@
 
   &--full-width {
     width: 100%;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   @media (max-width: 768px) {

@@ -1,21 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BackButton, Header, OptionCard, PlanCard } from "../../components";
 import OptionForMeIcon from "../../assets/icons/option-for-me.svg";
 import OptionSomeoneIcon from "../../assets/icons/option-for-someone.svg";
 import PlanHomeIcon from "../../assets/icons/plan-home.svg";
+import PlanClinicIcon from "../../assets/icons/plan-clinic.svg";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Divider, LinearProgress } from "@mui/material";
 import ArrowLeft from "../../assets/icons/arrow-left.svg";
 import { handleBack } from "../../utils/navigationUtils";
+import { Plan } from "../../interfaces/plan.interface";
+import { AppContext } from "../../context/AppContext";
+import { getPlans } from "../../services/getPlansService";
+import { calculateAge } from "../../utils/functions";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [activeOption, setActiveOption] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const { user } = useContext(AppContext)!;
+  const [filteredPlans, setFilteredPlans] = useState<Plan[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { setSelectedPlan } = useContext(AppContext)!;
 
-  const handleSelectPlan = () => {
+  useEffect(() => {
+    if (activeOption) {
+      fetchPlans();
+    }
+  }, [activeOption]);
+
+  const fetchPlans = async () => {
+    try {
+      setIsLoading(true);
+      const allPlans = await getPlans();
+      if (user?.birthDay) {
+        const userAge = calculateAge(new Date(user.birthDay));
+        const eligiblePlans = allPlans.filter((plan) => userAge <= plan.age);
+        setFilteredPlans(eligiblePlans);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+    }
+  };
+
+  const handleSelectPlan = (title: string, finalCost: number) => {
+    setSelectedPlan({ title, finalCost });
     navigate("/summary");
   };
 
@@ -88,7 +119,7 @@ const Home: React.FC = () => {
         <div className="home-page__content-center">
           <div className="home-page__title-section">
             <h1 className="home-page__title-section-title">
-              Rocío ¿Para quién deseas cotizar?
+              {user?.name} ¿Para quién deseas cotizar?
             </h1>
             <p className="home-page__title-section-subtitle">
               Selecciona la opción que se ajuste más a tus necesidades.
@@ -114,75 +145,25 @@ const Home: React.FC = () => {
 
         {activeOption && (
           <div className="home-page__plans">
-            <PlanCard
-              title="Plan en Casa"
-              icon={PlanHomeIcon}
-              currentCost="$37.05 al mes"
-              benefits={[
-                {
-                  title: "Médico general a domicilio",
-                  detail: "por S/20 y medicinas cubiertas al 100%."
-                },
-                {
-                  title: "Videoconsulta",
-                  detail:
-                    "y orientación telefónica al 100% en medicina general + pediatría."
-                },
-                {
-                  title: "Indemnización",
-                  detail:
-                    "de S/300 en caso de hospitalización por más de un día."
+            {filteredPlans.map((plan, index) => (
+              <PlanCard
+                key={index}
+                title={plan.name}
+                icon={
+                  plan.name === "Plan en Casa y Clínica"
+                    ? PlanClinicIcon
+                    : PlanHomeIcon
                 }
-              ]}
-              previousCost="$39 antes"
-              onSelect={handleSelectPlan}
-            />
-            <PlanCard
-              title="Plan en Casa"
-              icon={PlanHomeIcon}
-              currentCost="$37.05 al mes"
-              benefits={[
-                {
-                  title: "Médico general a domicilio",
-                  detail: "por S/20 y medicinas cubiertas al 100%."
-                },
-                {
-                  title: "Videoconsulta",
-                  detail:
-                    "y orientación telefónica al 100% en medicina general + pediatría."
-                },
-                {
-                  title: "Indemnización",
-                  detail:
-                    "de S/300 en caso de hospitalización por más de un día."
-                }
-              ]}
-              previousCost="$39 antes"
-              onSelect={handleSelectPlan}
-            />
-            <PlanCard
-              title="Plan en Casa"
-              icon={PlanHomeIcon}
-              currentCost="$37.05 al mes"
-              benefits={[
-                {
-                  title: "Médico general a domicilio",
-                  detail: "por S/20 y medicinas cubiertas al 100%."
-                },
-                {
-                  title: "Videoconsulta",
-                  detail:
-                    "y orientación telefónica al 100% en medicina general + pediatría."
-                },
-                {
-                  title: "Indemnización",
-                  detail:
-                    "de S/300 en caso de hospitalización por más de un día."
-                }
-              ]}
-              previousCost="$39 antes"
-              onSelect={handleSelectPlan}
-            />
+                currentCost={plan.price}
+                benefits={plan.description.map((detail) => ({
+                  title: detail.split(":")[0],
+                  detail
+                }))}
+                isDiscounted={activeOption === "option-two"}
+                onSelect={handleSelectPlan}
+                loading={isLoading}
+              />
+            ))}
           </div>
         )}
       </main>

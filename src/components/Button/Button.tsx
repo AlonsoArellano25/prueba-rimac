@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
   backgroundColor?: string;
   fullWidth?: boolean;
+  isLoading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,14 +14,19 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   backgroundColor = "#000",
   fullWidth = false,
+  isLoading = false,
   ...props
 }) => {
   return (
     <button
       className={`button ${fullWidth ? "button--full-width" : ""}`}
       onClick={onClick}
-      style={{ backgroundColor }}
-      {...props} // Pasa "type" y otras props al elemento <button>
+      style={{
+        backgroundColor: isLoading ? "#ccc" : backgroundColor,
+        cursor: isLoading ? "not-allowed" : "pointer"
+      }}
+      {...props}
+      disabled={isLoading}
     >
       {label}
     </button>

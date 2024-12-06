@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Summary.scss";
 import { BackButton, Header } from "../../components";
 import UsersIcon from "../../assets/icons/users.svg";
@@ -7,10 +7,12 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { handleBack } from "../../utils/navigationUtils";
 import { useNavigate } from "react-router-dom";
 import ArrowLeft from "../../assets/icons/arrow-left.svg";
+import { AppContext } from "../../context/AppContext";
 
 const Summary: React.FC = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { user, selectedPlan } = useContext(AppContext)!;
   return (
     <div className="summary-page">
       <Header />
@@ -65,24 +67,26 @@ const Summary: React.FC = () => {
           <div className={"summary-page__card__container"}>
             <img src={UsersIcon} alt="users" />
             <span className={"summary-page__card__name"}>
-              Rocio Miranda Díaz
+              {user?.name} {user?.lastName}
             </span>
           </div>
           <Divider />
           <span className={"summary-page__card__subtitle"}>
             Responsable de pago
           </span>
-          <span className={"summary-page__card__text"}>DNI: 444888888</span>
           <span className={"summary-page__card__text"}>
-            Celular: 5130216147
+            {user?.documentType}: {user?.documentNumber}
+          </span>
+          <span className={"summary-page__card__text"}>
+            Celular: {user?.phone}
           </span>
           <br />
           <span className={"summary-page__card__subtitle"}>Plan elegido</span>
           <span className={"summary-page__card__text"}>
-            Plan en Casa y Clínica
+            {selectedPlan?.title}
           </span>
           <span className={"summary-page__card__text"}>
-            Costo del Plan: $99 al mes
+            Costo del Plan: ${selectedPlan?.finalCost.toFixed(2)} al mes
           </span>
         </div>
       </main>
