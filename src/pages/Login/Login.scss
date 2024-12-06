@@ -10,24 +10,34 @@
 
   &__content {
     display: flex;
-    padding: 20px;
+    gap: 20px;
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
   }
 
   &__image {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45%;
+    grid-column: 1 / 7;
 
     img {
-      max-width: 90%;
+      max-width: 100%;
+      height: auto;
       border-radius: 16px;
     }
   }
 
   &__form {
-    flex: 1;
-    max-width: 400px;
+    grid-column: 7 / -1;
+    max-width: 100%;
+    padding-right: 200px;
   }
 
   &__tag {
@@ -189,8 +199,8 @@
   }
   &__divider {
     background-color: #ccd1ee !important;
-    margin-bottom: 34px !important;
   }
+
   .error {
     color: red;
     font-size: 12px;
@@ -203,31 +213,46 @@
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .login-page {
-    position: relative;
-    padding-top: 20px;
+    display: grid;
   }
 
   .login-page__content {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 80px;
   }
 
-  .login-page__form {
-    width: 100%;
+  .login-page__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
   }
 
   .login-page__image {
-    height: 200px;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-      height: 100%;
+      max-height: 200px;
+      max-width: 100%;
+      height: auto;
       width: auto;
-      margin-bottom: 80px;
+      border-radius: 16px;
+      margin-bottom: 20px;
     }
+  }
+
+  .login-page__form {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .login-page__terms {
@@ -236,5 +261,21 @@
 
   .login-page__title {
     font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .login-page__description {
+    font-size: 14px;
+  }
+
+  .login-page__checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .login-page__divider {
+    margin: 20px 0;
   }
 }
