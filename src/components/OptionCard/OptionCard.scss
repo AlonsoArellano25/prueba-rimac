@@ -59,3 +59,11 @@
     color: #141938;
   }
 }
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .option-card {
+    width: 100%;
+    max-width: 356px;
+  }
+}

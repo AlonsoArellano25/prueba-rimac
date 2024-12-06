@@ -12,9 +12,24 @@
     margin-bottom: 10px;
   }
 
+  &__divider {
+    background-color: #2b304e !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
   &__text {
     font-size: 14px;
     color: #f8f9ff;
     font-weight: 400;
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px;
   }
 }

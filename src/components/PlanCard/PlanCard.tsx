@@ -33,15 +33,18 @@ const PlanCard: React.FC<PlanCardProps> = ({
       <Divider style={{ margin: "20px 0" }} />
       <ul className="plan-card__benefits">
         {benefits.map((benefit, index) => (
-          <li key={index} className="plan-card__benefit">
-            <span className="plan-card__benefits__benefit-title">
-              {benefit.title}
-            </span>
+          <div key={index}>
+            <li key={index} className="plan-card__benefit">
+              <span className="plan-card__benefits__benefit-title">
+                {benefit.title}
+              </span>
+              <br />
+              <span className="plan-card__benefits__benefit-detail">
+                {benefit.detail}
+              </span>
+            </li>
             <br />
-            <span className="plan-card__benefits__benefit-detail">
-              {benefit.detail}
-            </span>
-          </li>
+          </div>
         ))}
       </ul>
       <Button

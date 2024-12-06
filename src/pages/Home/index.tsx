@@ -5,10 +5,15 @@ import OptionSomeoneIcon from "../../assets/icons/option-for-someone.svg";
 import PlanHomeIcon from "../../assets/icons/plan-home.svg";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
+import useIsMobile from "../../hooks/useIsMobile";
+import { Divider, LinearProgress } from "@mui/material";
+import ArrowLeft from "../../assets/icons/arrow-left.svg";
+import { handleBack } from "../../utils/navigationUtils";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [activeOption, setActiveOption] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const handleSelectPlan = () => {
     navigate("/summary");
@@ -17,30 +22,69 @@ const Home: React.FC = () => {
   return (
     <div className="home-page">
       <Header />
-      <div className="home-page__progress-bar">
-        <div className="home-page__step-group">
-          <div className="home-page__step home-page__step--active">
-            <span>1</span>
+      {isMobile ? (
+        <>
+          <div
+            style={{
+              padding: 24,
+              flexDirection: "row",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px"
+            }}
+          >
+            <div
+              onClick={() => handleBack(navigate)}
+              className="back-button__icon-gray"
+            >
+              <img src={ArrowLeft} alt="Arrow Left" />
+            </div>
+            <span className="home-page__label">Paso 1 de 2</span>
+            <div style={{ flex: 1 }}>
+              <LinearProgress
+                variant="determinate"
+                value={10}
+                sx={{
+                  height: 8,
+                  borderRadius: 4,
+                  "& .MuiLinearProgress-bar": {
+                    backgroundColor: "#4F4FFF"
+                  },
+                  backgroundColor: "#D7DBF5"
+                }}
+              />
+            </div>
           </div>
-          <span className="home-page__step-title home-page__step-title--active">
-            Planes y coberturas
-          </span>
-        </div>
-        <div className="home-page__progress">
-          <div className="home-page__progress-bar-segment" />
-          <div className="home-page__progress-bar-segment" />
-          <div className="home-page__progress-bar-segment" />
-          <div className="home-page__progress-bar-segment" />
-        </div>
-        <div className="home-page__step-group">
-          <div className="home-page__step">
-            <span className="home-page__label">2</span>
+          <Divider />
+        </>
+      ) : (
+        <div className="home-page__progress-bar">
+          <div className="home-page__step-group">
+            <div className="home-page__step home-page__step--active">
+              <span>1</span>
+            </div>
+            <span className="home-page__step-title home-page__step-title--active">
+              Planes y coberturas
+            </span>
           </div>
-          <span className="home-page__step-title">Resumen</span>
+          <div className="home-page__progress">
+            <div className="home-page__progress-bar-segment" />
+            <div className="home-page__progress-bar-segment" />
+            <div className="home-page__progress-bar-segment" />
+            <div className="home-page__progress-bar-segment" />
+          </div>
+          <div className="home-page__step-group">
+            <div className="home-page__step">
+              <span className="home-page__label">2</span>
+            </div>
+            <span className="home-page__step-title">Resumen</span>
+          </div>
         </div>
-      </div>
+      )}
+
       <main className="home-page__content">
-        <BackButton />
+        {!isMobile && <BackButton />}
+
         <div className="home-page__content-center">
           <div className="home-page__title-section">
             <h1 className="home-page__title-section-title">
