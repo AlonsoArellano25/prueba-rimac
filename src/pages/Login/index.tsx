@@ -4,27 +4,28 @@ import BlurAsset1 from "../../assets/images/blur-asset-1.png";
 import BlurAsset2 from "../../assets/images/blur-asset-2.png";
 import BlurAsset1Mobile from "../../assets/images/blur-asset-1-mobile.png";
 import BlurAsset2Mobile from "../../assets/images/blur-asset-2-mobile.png";
-import {
-  Select,
-  MenuItem,
-  InputBase,
-  SelectChangeEvent,
-  Divider
-} from "@mui/material";
-import React, { useState } from "react";
+import { Select, MenuItem, InputBase, Divider, Checkbox } from "@mui/material";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import useIsMobile from "../../hooks/useIsMobile";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import validationSchema from "./validations";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [documentType, setDocumentType] = useState("DNI");
 
-  const handleTypeChange = (event: SelectChangeEvent<string>) => {
-    setDocumentType(event.target.value);
+  const initialValues = {
+    documentType: "DNI",
+    documentNumber: "",
+    phone: "",
+    acceptPrivacyPolicy: false,
+    acceptCommercialPolicy: false
   };
-  const handleButtonClick = () => {
+
+  const handleSubmit = (values: typeof initialValues) => {
+    console.log(values);
     navigate("/home");
   };
 
@@ -63,70 +64,119 @@ const Login: React.FC = () => {
             Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
             asesoría. 100% online.
           </p>
-          <form className="login-page__form-content">
-            <div className="login-page__input-group">
-              <Select
-                value={documentType}
-                onChange={handleTypeChange}
-                className="login-page__dropdown"
-                displayEmpty
-                sx={{
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#5e6488"
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#5e6488"
-                  }
-                }}
-              >
-                <MenuItem value="DNI">DNI</MenuItem>
-                <MenuItem value="RUC">RUC</MenuItem>
-              </Select>
-              <InputBase
-                placeholder="Nro. de documento"
-                className="login-page__input"
-              />
-            </div>
-            <InputBase
-              placeholder="Celular"
-              className="login-page__input login-page__input--full"
-            />
-            <div className="login-page__checkbox-group">
-              <input
-                type="checkbox"
-                id="privacy-policy"
-                className="login-page__checkbox"
-              />
-              <label
-                htmlFor="privacy-policy"
-                className="login-page__checkbox-label"
-              >
-                Acepto la Política de Privacidad
-              </label>
-            </div>
-            <div className="login-page__checkbox-group">
-              <input
-                type="checkbox"
-                id="commercial-policy"
-                className="login-page__checkbox"
-              />
-              <label
-                htmlFor="commercial-policy"
-                className="login-page__checkbox-label"
-              >
-                Acepto la Política Comunicaciones Comerciales
-              </label>
-            </div>
-            <p className="login-page__terms">
-              <a href="/">Aplican Términos y Condiciones.</a>
-            </p>
-          </form>
 
-          <Button
-            onClick={handleButtonClick}
-            label="Cotiza aquí"
-            backgroundColor={"#03050f"}
-          />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ values, handleChange }) => (
+              <Form className="login-page__form-content">
+                <div className="login-page__input-group">
+                  <Field
+                    as={Select}
+                    name="documentType"
+                    value={values.documentType}
+                    onChange={handleChange}
+                    className="login-page__dropdown"
+                    displayEmpty
+                    sx={{
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#5e6488"
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#5e6488"
+                      }
+                    }}
+                  >
+                    <MenuItem value="DNI">DNI</MenuItem>
+                    <MenuItem value="RUC">RUC</MenuItem>
+                  </Field>
+
+                  <Field
+                    as={InputBase}
+                    name="documentNumber"
+                    placeholder="Nro. de documento"
+                    className="login-page__input"
+                    value={values.documentNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+                <ErrorMessage
+                  name="documentNumber"
+                  component="div"
+                  className="error"
+                />
+                <div className="login-page__input-group">
+                  <Field
+                    as={InputBase}
+                    name="phone"
+                    placeholder="Celular"
+                    className="login-page__input login-page__input--full"
+                    value={values.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <ErrorMessage name="phone" component="div" className="error" />
+                <div className="login-page__checkbox-group">
+                  <Field
+                    as={Checkbox}
+                    name="acceptPrivacyPolicy"
+                    type="checkbox"
+                    sx={{
+                      "&.Mui-checked": {
+                        color: "black"
+                      }
+                    }}
+                  />
+                  <label
+                    className="login-page__checkbox-label"
+                    htmlFor="acceptPrivacyPolicy"
+                  >
+                    Acepto la Política de Privacidad
+                  </label>
+                </div>
+                <ErrorMessage
+                  name="acceptPrivacyPolicy"
+                  component="div"
+                  className="error"
+                />
+                <div className="login-page__checkbox-group">
+                  <Field
+                    as={Checkbox}
+                    name="acceptCommercialPolicy"
+                    type="checkbox"
+                    sx={{
+                      "&.Mui-checked": {
+                        color: "black"
+                      }
+                    }}
+                  />
+                  <label
+                    className="login-page__checkbox-label"
+                    htmlFor="acceptCommercialPolicy"
+                  >
+                    Acepto la Política Comunicaciones Comerciales
+                  </label>
+                </div>
+                <ErrorMessage
+                  name="acceptCommercialPolicy"
+                  component="div"
+                  className="error"
+                />
+                <p className="login-page__terms">
+                  <a href="/">Aplican Términos y Condiciones.</a>
+                </p>
+                <div>
+                  <Button
+                    type="submit"
+                    label="Cotiza aquí"
+                    backgroundColor={"#03050f"}
+                  />
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </main>
       <Footer />

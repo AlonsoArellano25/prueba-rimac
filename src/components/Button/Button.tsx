@@ -1,7 +1,7 @@
 import React from "react";
 import "./Button.scss";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   onClick?: () => void;
   backgroundColor?: string;
@@ -12,13 +12,15 @@ const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
   backgroundColor = "#000",
-  fullWidth = false
+  fullWidth = false,
+  ...props
 }) => {
   return (
     <button
       className={`button ${fullWidth ? "button--full-width" : ""}`}
       onClick={onClick}
       style={{ backgroundColor }}
+      {...props} // Pasa "type" y otras props al elemento <button>
     >
       {label}
     </button>

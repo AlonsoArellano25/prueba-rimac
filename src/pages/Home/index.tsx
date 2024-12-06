@@ -112,74 +112,79 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="home-page__plans">
-          <PlanCard
-            title="Plan en Casa"
-            icon={PlanHomeIcon}
-            currentCost="$37.05 al mes"
-            benefits={[
-              {
-                title: "Médico general a domicilio",
-                detail: "por S/20 y medicinas cubiertas al 100%."
-              },
-              {
-                title: "Videoconsulta",
-                detail:
-                  "y orientación telefónica al 100% en medicina general + pediatría."
-              },
-              {
-                title: "Indemnización",
-                detail: "de S/300 en caso de hospitalización por más de un día."
-              }
-            ]}
-            previousCost="$39 antes"
-            onSelect={handleSelectPlan}
-          />
-          <PlanCard
-            title="Plan en Casa"
-            icon={PlanHomeIcon}
-            currentCost="$37.05 al mes"
-            benefits={[
-              {
-                title: "Médico general a domicilio",
-                detail: "por S/20 y medicinas cubiertas al 100%."
-              },
-              {
-                title: "Videoconsulta",
-                detail:
-                  "y orientación telefónica al 100% en medicina general + pediatría."
-              },
-              {
-                title: "Indemnización",
-                detail: "de S/300 en caso de hospitalización por más de un día."
-              }
-            ]}
-            previousCost="$39 antes"
-            onSelect={handleSelectPlan}
-          />
-          <PlanCard
-            title="Plan en Casa"
-            icon={PlanHomeIcon}
-            currentCost="$37.05 al mes"
-            benefits={[
-              {
-                title: "Médico general a domicilio",
-                detail: "por S/20 y medicinas cubiertas al 100%."
-              },
-              {
-                title: "Videoconsulta",
-                detail:
-                  "y orientación telefónica al 100% en medicina general + pediatría."
-              },
-              {
-                title: "Indemnización",
-                detail: "de S/300 en caso de hospitalización por más de un día."
-              }
-            ]}
-            previousCost="$39 antes"
-            onSelect={handleSelectPlan}
-          />
-        </div>
+        {activeOption && (
+          <div className="home-page__plans">
+            <PlanCard
+              title="Plan en Casa"
+              icon={PlanHomeIcon}
+              currentCost="$37.05 al mes"
+              benefits={[
+                {
+                  title: "Médico general a domicilio",
+                  detail: "por S/20 y medicinas cubiertas al 100%."
+                },
+                {
+                  title: "Videoconsulta",
+                  detail:
+                    "y orientación telefónica al 100% en medicina general + pediatría."
+                },
+                {
+                  title: "Indemnización",
+                  detail:
+                    "de S/300 en caso de hospitalización por más de un día."
+                }
+              ]}
+              previousCost="$39 antes"
+              onSelect={handleSelectPlan}
+            />
+            <PlanCard
+              title="Plan en Casa"
+              icon={PlanHomeIcon}
+              currentCost="$37.05 al mes"
+              benefits={[
+                {
+                  title: "Médico general a domicilio",
+                  detail: "por S/20 y medicinas cubiertas al 100%."
+                },
+                {
+                  title: "Videoconsulta",
+                  detail:
+                    "y orientación telefónica al 100% en medicina general + pediatría."
+                },
+                {
+                  title: "Indemnización",
+                  detail:
+                    "de S/300 en caso de hospitalización por más de un día."
+                }
+              ]}
+              previousCost="$39 antes"
+              onSelect={handleSelectPlan}
+            />
+            <PlanCard
+              title="Plan en Casa"
+              icon={PlanHomeIcon}
+              currentCost="$37.05 al mes"
+              benefits={[
+                {
+                  title: "Médico general a domicilio",
+                  detail: "por S/20 y medicinas cubiertas al 100%."
+                },
+                {
+                  title: "Videoconsulta",
+                  detail:
+                    "y orientación telefónica al 100% en medicina general + pediatría."
+                },
+                {
+                  title: "Indemnización",
+                  detail:
+                    "de S/300 en caso de hospitalización por más de un día."
+                }
+              ]}
+              previousCost="$39 antes"
+              onSelect={handleSelectPlan}
+            />
+          </div>
+        )}
       </main>
     </div>
   );

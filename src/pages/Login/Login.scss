@@ -90,7 +90,6 @@
   &__input--full {
     border: 1px solid vars.$border-color;
     border-radius: 8px;
-    margin-bottom: 15px;
     padding: 10px;
     font-size: 14px;
 
@@ -191,6 +190,13 @@
   &__divider {
     background-color: #ccd1ee !important;
     margin-bottom: 34px !important;
+  }
+  .error {
+    color: red;
+    font-size: 12px;
+    font-family: "Lato";
+    position: relative;
+    top: -14px;
   }
 }
 
