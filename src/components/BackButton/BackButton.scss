@@ -1,0 +1,27 @@
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 48px;
+    border: 2px solid #4f4fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      display: block;
+    }
+  }
+
+  &__text {
+    color: #4f4fff;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: "Lato";
+  }
+}

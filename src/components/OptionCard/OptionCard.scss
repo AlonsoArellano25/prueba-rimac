@@ -1,0 +1,61 @@
+.option-card {
+  padding: 16px 24px 40px 24px;
+  border-radius: 24px;
+  box-shadow: 0px 4px 8px 4px #aeacf359;
+  display: flex;
+  flex-direction: column;
+  max-width: 206px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  &--active {
+    border: 2px solid black;
+  }
+
+  &__status {
+    width: 24px;
+    height: 24px;
+    border-radius: 48px;
+    background-color: white;
+    border: 1px solid #a9afd9;
+    align-self: flex-end;
+    position: relative;
+
+    &--active {
+      background-color: #389e0d;
+      border-color: #389e0d;
+    }
+
+    &__check {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__title {
+    font-family: "Lato";
+    font-size: 20px;
+    font-weight: bold;
+    color: #141938;
+    padding: 8px 0;
+  }
+
+  &__description {
+    font-family: "Lato";
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: bold;
+    color: #141938;
+  }
+}

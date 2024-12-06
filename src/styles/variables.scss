@@ -1,0 +1,13 @@
+$primary-color: #03050f;
+$second-color: #141938;
+$gray-color: #7981b2;
+$border-color: #5e6488;
+$background-color: #fafbff;
+
+:export {
+  $primary-color: $primary-color;
+  $second-color: $second-color;
+  $border-color: $border-color;
+  $background-color: $background-color;
+  $gray-color: $gray-color;
+}

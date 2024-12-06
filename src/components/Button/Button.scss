@@ -1,0 +1,23 @@
+.button {
+  display: inline-block;
+  width: auto; /* Por defecto */
+  padding: 15px 25px;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}

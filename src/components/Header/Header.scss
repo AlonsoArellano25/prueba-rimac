@@ -1,0 +1,33 @@
+@use "../../styles/variables.scss" as vars;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 160px;
+  background-color: vars.$background-color;
+
+  &__logo img {
+    height: 40px;
+  }
+
+  &__info {
+    text-align: right;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 12px;
+    color: vars.$primary-color;
+    gap: 5px;
+
+    &__phone-icon {
+      margin-left: 5px;
+    }
+
+    .header__phone {
+      color: vars.$primary-color;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
+}
