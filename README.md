@@ -48,6 +48,8 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu máquina:
 - **TypeScript** - Lenguaje que extiende JavaScript con tipado estático.
 - **Vite** - Herramienta de desarrollo rápida y moderna.
 - **Material UI** - Biblioteca de componentes estilizados para React.
+- **Jest** - Biblioteca para crear y ejecutar pruebas
+- **Axios** - Biblioteca para realizar solicitudes HTTP
 
 ---
 

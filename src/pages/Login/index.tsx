@@ -217,7 +217,6 @@ const Login: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
       {isMobile ? (
         <>
           <img
@@ -245,6 +244,7 @@ const Login: React.FC = () => {
           />
         </>
       )}
+      <Footer />
     </div>
   );
 };
